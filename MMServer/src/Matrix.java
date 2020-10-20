@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Vector;
 
 public class Matrix implements java.io.Serializable
@@ -23,6 +24,28 @@ public class Matrix implements java.io.Serializable
     public Matrix(Vector<Vector<Double>> matrix)
     {
         _matrix = matrix;
+    }
+
+    public Matrix(List<List<Matrix>> childs, int colLength, int rowLength)
+    {
+        this(colLength, rowLength);
+
+        int colsPadding = childs.get(0).get(0).nCols();
+        int rowsPadding = childs.get(0).get(0).nRows();
+
+        int colCursor = 0;
+        int rowCursor = 0;
+
+        for(List<Matrix> rows : childs)
+        {
+            colCursor = 0;
+            for(Matrix m : rows)
+            {
+                setPart(m,rowCursor,colCursor);
+                colCursor += colsPadding;
+            }
+            rowCursor += rowsPadding;
+        }
     }
 
     public int nCols()
@@ -61,7 +84,7 @@ public class Matrix implements java.io.Serializable
         _matrix.get(rowIdx).set(colIdx,val);
     }
 
-    public String Serialize()
+    public String serialize()
     {
         StringBuilder builder = new StringBuilder();
 
@@ -74,6 +97,20 @@ public class Matrix implements java.io.Serializable
             builder.append("\n");
         }
         return builder.toString();
+    }
+
+    public void setPart(Matrix matrix, int colIdx, int rowIdx)
+    {
+        // Replace a matrix part by another matrix
+        // Used to recreate a matrix from sub matrix
+
+        for(int row = rowIdx; row < rowIdx+matrix.nRows() ; row ++)
+        {
+            for(int col = colIdx ; col < colIdx + matrix.nCols(); col++ )
+            {
+                set(row,col,matrix.get(row - rowIdx,col - colIdx));
+            }
+        }
     }
 
     public Matrix dotProduct(Matrix b)
@@ -97,6 +134,44 @@ public class Matrix implements java.io.Serializable
             }
         }
         return matrix;
+    }
+
+    public Matrix getSliceByRows(int startRow, int endRow)
+    {
+        Vector<Vector<Double>> res = new Vector<>();
+
+        for (int r=startRow ; r <= endRow; r++)
+        {
+            res.add(getRow(r));
+        }
+        return new Matrix(res);
+    }
+
+    public Matrix getSliceByCols(int startCol, int endCol)
+    {
+        Vector<Vector<Double>> res = new Vector<>();
+
+        for (int c=startCol ; c <= endCol; c++)
+        {
+            res.add(getCol(c));
+        }
+        return new Matrix(res);
+    }
+
+    public Matrix transpose()
+    {
+        // We don't modify the actual matrix we return m.T without affecting the original one
+        Matrix result = new Matrix(nRows(),nCols());
+
+        for(int row = 0; row < result.nRows() ; row ++)
+        {
+            for(int col = 0 ; col < result.nCols() ; col++ )
+            {
+                result.set(col,row,get(row,col));
+            }
+        }
+
+        return  result;
     }
 
     public Vector<Vector<Double>> toVector()

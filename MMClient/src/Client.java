@@ -14,8 +14,8 @@ public class Client
         {
             _randomInstance = new Random();
             IMatrixOperator matrixOperator = (IMatrixOperator) Naming.lookup("rmi://localhost:12345/MatrixMultiplicationServer");
-            Vector<Vector<Double>> a = generateMatrix(10,10);
-            Vector<Vector<Double>> b = generateMatrix(10,10);
+            Vector<Vector<Double>> a = generateMatrix(2,2);
+            Vector<Vector<Double>> b = generateMatrix(2,2);
 
             System.out.println("Matrix a:");
             //System.out.println(matrixOperator.matrixSerialization(a));

@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.rmi.Naming;
-import java.rmi.server.UnicastRemoteObject;
 
 public class Server
 {
@@ -13,7 +12,7 @@ public class Server
         {
             java.rmi.registry.LocateRegistry.createRegistry(12345);
 
-            MatrixOperator operator = new MatrixOperator();
+            ThreadedMatrixOperator operator = new ThreadedMatrixOperator();
 
             Naming.rebind("rmi://localhost:12345/MatrixMultiplicationServer",operator);
 
