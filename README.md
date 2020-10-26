@@ -8,7 +8,12 @@ In order to totaly fit my needs I manually reimplemented matrix operations for f
 
 ### Overview
 
-The idea to reduce matrix dot product computation is to split matrix into several sub matrix
+The idea to reduce matrix dot product computation is to split matrix into several sub matrix.
+
+As we can see in the picture bellow:
+![ThreadedComputation](https://user-images.githubusercontent.com/48685784/97202007-5f46ea80-17b3-11eb-96ce-b31f4f6776d5.png)
+
+This example is quite simple and here each thread will only compute one cell of the output matrix, but our algorithm will automatically split a matrices and assigne them to the desired amount of threads.
 
 ### What I did:
 
