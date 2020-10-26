@@ -15,6 +15,7 @@ As we can see in the picture bellow:
 
 This example is quite simple and here each thread will only compute one cell of the output matrix, but our algorithm will automatically split a matrices and assigne them to the desired amount of threads.
 
+For example for bigger operation we can image that each of the 8 threads will output a 100x100 matrix resulting in a 400x200 (or 200x400 or 400x100 etc.) matrix
 ### What I did:
 
 - Implement server/client RMI
