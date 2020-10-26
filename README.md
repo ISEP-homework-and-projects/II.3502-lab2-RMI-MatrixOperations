@@ -13,7 +13,7 @@ The idea to reduce matrix dot product computation is to split matrix into severa
 As we can see in the picture bellow:
 ![ThreadedComputation](https://user-images.githubusercontent.com/48685784/97202007-5f46ea80-17b3-11eb-96ce-b31f4f6776d5.png)
 
-This example is quite simple and here each thread will only compute one cell of the output matrix, but our algorithm will automatically split a matrices and assigne them to the desired amount of threads.
+This example is quite simple and here each thread will only compute one cell of the output matrix, but our algorithm will automatically split a matrices and assign them to the desired amount of threads.
 
 For example for bigger operation we can image that each of the 8 threads will output a 100x100 matrix resulting in a 400x200 (or 200x400 or 400x100 etc.) matrix
 ### What I did:
